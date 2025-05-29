@@ -15,12 +15,14 @@ module.exports = {
     assetBundlePatterns: ["**/*"],
     ios: {
       supportsTablet: true,
+      bundleIdentifier: "com.vetra.mobile",
     },
     android: {
       adaptiveIcon: {
         foregroundImage: "./assets/images/adaptive-icon.png",
         backgroundColor: "#ffffff",
       },
+      package: "com.vetra.mobile",
     },
     web: {
       bundler: "metro",
@@ -38,9 +40,14 @@ module.exports = {
           },
           android: {
             newArchEnabled: true,
+            kotlinVersion: "1.8.10",
+            packagingOptions: {
+              pickFirst: ["**/libc++_shared.so"],
+            },
           },
         },
       ],
+      "@morrowdigital/watermelondb-expo-plugin",
       "expo-web-browser",
     ],
     experiments: {
