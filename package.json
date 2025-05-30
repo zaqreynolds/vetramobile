@@ -56,6 +56,7 @@
     "@tamagui/metro-plugin": "^1.126.13",
     "@types/react": "~19.0.10",
     "@types/react-native": "^0.73.0",
+    "metro-react-native-babel-preset": "^0.77.0",
     "typescript": "~5.8.3"
   }
 }
