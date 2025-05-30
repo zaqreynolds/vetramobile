@@ -18,8 +18,22 @@ export class User extends Model {
   @readonly @date("created_at") createdAt!: Date;
   @readonly @date("updated_at") updatedAt!: Date;
 
-  // Computed properties
   get fullName() {
     return `${this.firstName} ${this.lastName}`;
+  }
+
+  get id(): string {
+    return this._raw.id;
+  }
+
+  get age() {
+    const today = new Date();
+    const birthDate = new Date(this.birthday);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
   }
 }
