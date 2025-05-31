@@ -1,42 +1,45 @@
 import { Link, Tabs } from "expo-router";
-import { Button, useTheme } from "tamagui";
-import { Atom, AudioWaveform } from "@tamagui/lucide-icons";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { View, useDripsyTheme } from "dripsy";
+import { Ionicons } from "@expo/vector-icons";
+import { SafeArea } from "../../components/SafeArea";
 
 export default function TabLayout() {
-  const theme = useTheme();
-
+  const { theme } = useDripsyTheme();
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: theme.background.val }}>
+    <SafeArea>
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: theme.red10.val,
+          tabBarActiveTintColor: "#007AFF",
           tabBarStyle: {
-            backgroundColor: theme.background.val,
-            borderTopColor: theme.borderColor.val,
+            backgroundColor: "#FFFFFF",
+            borderTopColor: "#E5E5E5",
           },
           headerStyle: {
-            backgroundColor: theme.background.val,
-            borderBottomColor: theme.borderColor.val,
+            backgroundColor: "#FFFFFF",
+            borderBottomColor: "#E5E5E5",
           },
-          headerTintColor: theme.color.val,
+          headerTintColor: "#000000",
           header: () => null,
         }}
       >
         <Tabs.Screen
           name="index"
           options={{
-            tabBarIcon: ({ color }) => <Atom color={color as any} />,
+            tabBarIcon: ({ color }) => (
+              <Ionicons name="home" size={24} color={color} />
+            ),
           }}
         />
         <Tabs.Screen
           name="two"
           options={{
             title: "Tab Two",
-            tabBarIcon: ({ color }) => <AudioWaveform color={color as any} />,
+            tabBarIcon: ({ color }) => (
+              <Ionicons name="settings" size={24} color={color} />
+            ),
           }}
         />
       </Tabs>
-    </SafeAreaView>
+    </SafeArea>
   );
 }

@@ -1,5 +1,3 @@
-import "../tamagui-web.css";
-
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { StatusBar } from "expo-status-bar";
@@ -11,7 +9,6 @@ import {
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { Provider } from "./Provider";
-import { useTheme } from "tamagui";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -27,19 +24,18 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [interLoaded, interError] = useFonts({
-    Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
-    InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
+  const [loaded, error] = useFonts({
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
 
   useEffect(() => {
-    if (interLoaded || interError) {
+    if (loaded || error) {
       // Hide the splash screen after the fonts have loaded (or an error was returned) and the UI is ready.
       SplashScreen.hideAsync();
     }
-  }, [interLoaded, interError]);
+  }, [loaded, error]);
 
-  if (!interLoaded && !interError) {
+  if (!loaded && !error) {
     return null;
   }
 
@@ -56,7 +52,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
-  const theme = useTheme();
+
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />

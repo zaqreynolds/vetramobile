@@ -1,21 +1,18 @@
 import { useColorScheme } from "react-native";
-import { TamaguiProvider, type TamaguiProviderProps } from "tamagui";
-import { config } from "../tamagui.config";
+import { DripsyProvider } from "dripsy";
+import { theme } from "../theme";
 
-export function Provider({
-  children,
-  ...rest
-}: Omit<TamaguiProviderProps, "config">) {
+export function Provider({ children }: { children: React.ReactNode }) {
   const colorScheme = useColorScheme();
 
   return (
-    <TamaguiProvider
-      config={config}
-      defaultTheme={colorScheme === "dark" ? "dark" : "light"}
-      {...rest}
+    <DripsyProvider
+      theme={theme}
+      // Optional: you can pass a dark theme object
+      // darkTheme={darkTheme}
     >
       {children}
-    </TamaguiProvider>
+    </DripsyProvider>
   );
 }
 

@@ -1,9 +1,24 @@
-import { H2, YStack } from "tamagui";
+import { View, Text } from "dripsy";
 
 export default function HomeScreen() {
   return (
-    <YStack flex={1} items="center" gap="$8" px="$10" bg="$background">
-      <H2>Welcome to Vetra</H2>
-    </YStack>
+    <View
+      sx={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        bg: "$background",
+        px: "$10",
+      }}
+    >
+      <Text
+        sx={{
+          fontSize: 24,
+          fontWeight: "bold",
+        }}
+      >
+        Welcome to Vetra
+      </Text>
+    </View>
   );
 }

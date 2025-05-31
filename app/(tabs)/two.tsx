@@ -1,11 +1,23 @@
-import { Text, View } from 'tamagui'
+import { View, Text } from "dripsy";
 
 export default function TabTwoScreen() {
   return (
-    <View flex={1} items="center" justify="center" bg="$background">
-      <Text fontSize={20} color="$blue10">
+    <View
+      sx={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        bg: "$background",
+      }}
+    >
+      <Text
+        sx={{
+          fontSize: 20,
+          color: "$blue",
+        }}
+      >
         Tab Two
       </Text>
     </View>
-  )
+  );
 }
