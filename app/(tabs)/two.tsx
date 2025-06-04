@@ -7,13 +7,13 @@ export default function TabTwoScreen() {
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        bg: "$background",
+        bg: "background",
       }}
     >
       <Text
         sx={{
           fontSize: 20,
-          color: "$blue",
+          color: "blue",
         }}
       >
         Tab Two

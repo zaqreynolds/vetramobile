@@ -1,16 +1,12 @@
-import { useColorScheme } from "react-native";
 import { DripsyProvider } from "dripsy";
-import { theme } from "../theme";
+import { useColorScheme } from "react-native";
+import { theme, darkTheme } from "../theme";
 
 export function Provider({ children }: { children: React.ReactNode }) {
   const colorScheme = useColorScheme();
 
   return (
-    <DripsyProvider
-      theme={theme}
-      // Optional: you can pass a dark theme object
-      // darkTheme={darkTheme}
-    >
+    <DripsyProvider theme={colorScheme === "dark" ? darkTheme : theme}>
       {children}
     </DripsyProvider>
   );
