@@ -67,10 +67,24 @@ const text = {
   },
 };
 
+const radii = {
+  sm: 4,
+  md: 8,
+  lg: 16,
+};
+
+const fontSizes = {
+  sm: 14,
+  md: 16,
+  lg: 20,
+};
+
 const theme = makeTheme({
   colors,
   space,
   text,
+  radii,
+  fontSizes,
   types: {
     onlyAllowThemeValues: "always",
   },

@@ -17,6 +17,9 @@ export const userOnboardingSchema = z.object({
   }),
   weight: z.number().min(1).optional(),
   height: z.number().min(1).optional(),
+
+  heightFeet: z.number().min(1).optional(),
+  heightInches: z.number().min(1).optional(),
 });
 
 export type UserOnboardingSchema = z.infer<typeof userOnboardingSchema>;

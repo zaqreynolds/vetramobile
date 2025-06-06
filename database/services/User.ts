@@ -32,8 +32,6 @@ export class UserService {
         user.weight = data.weight;
         user.height = data.height;
         user.gender = data.gender;
-        user.createdAt = new Date();
-        user.updatedAt = new Date();
       });
     });
   }
