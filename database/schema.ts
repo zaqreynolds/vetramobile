@@ -12,7 +12,7 @@ export default appSchema({
         { name: "measurement_preference", type: "string" }, // 'metric' or 'imperial'
         { name: "weight", type: "number", isOptional: true },
         { name: "height", type: "number", isOptional: true },
-        { name: "gender", type: "string", isOptional: true, isIndexed: true },
+        { name: "gender", type: "string", isIndexed: true },
         { name: "created_at", type: "number" }, // timestamp in ms
         { name: "updated_at", type: "number" }, // timestamp in ms
       ],

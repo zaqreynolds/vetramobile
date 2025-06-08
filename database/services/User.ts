@@ -1,6 +1,5 @@
 import { User } from "../models/User";
 import database from "../index";
-import { Q } from "@nozbe/watermelondb";
 import { CreateUserDTO, UpdateUserDTO } from "../dtos/User";
 
 export class UserService {
@@ -81,5 +80,15 @@ export class UserService {
       console.error("Delete error:", error);
       return false;
     }
+  }
+
+  static async nukeAll(): Promise<void> {
+    const users = await database.get<User>("users").query().fetch();
+
+    await database.write(async () => {
+      for (const user of users) {
+        await user.destroyPermanently();
+      }
+    });
   }
 }

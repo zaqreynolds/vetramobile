@@ -14,7 +14,7 @@ export class User extends Model {
   measurementPreference!: MeasurementPreference;
   @field("weight") weight?: number;
   @field("height") height?: number;
-  @field("gender") gender?: Gender;
+  @text("gender") gender!: Gender;
   @readonly @date("created_at") createdAt!: Date;
   @readonly @date("updated_at") updatedAt!: Date;
 

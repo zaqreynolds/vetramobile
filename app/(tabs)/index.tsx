@@ -16,41 +16,41 @@ import { ThemedDatePicker } from "components/ThemedDatePicker";
 import { ThemedRadioGroup } from "components/ThemedRadioGroup";
 import SegmentedControl from "@react-native-segmented-control/segmented-control";
 import { ThemedButton } from "components/ThemedButton";
+import { useUserStore } from "store/useUserStore";
 
 export default function HomeScreen() {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const user = useUserStore((state) => state.user);
+  const fetchUser = useUserStore((state) => state.fetchUser);
+  const setUser = useUserStore((state) => state.setUser);
+
+  const defaultValues: UserOnboardingSchema = {
+    measurementPreference: "imperial",
+    heightFeet: 5,
+    heightInches: 6,
+    height: 167,
+    weight: 70,
+    birthday: new Date(2000, 0, 1),
+    firstName: "",
+    lastName: "",
+    gender: "",
+  };
 
   const {
     control,
     handleSubmit,
     watch,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<UserOnboardingSchema>({
     resolver: zodResolver(userOnboardingSchema),
-    defaultValues: {
-      measurementPreference: "imperial",
-      heightFeet: 5,
-      heightInches: 6,
-      height: 167,
-      weight: 70,
-      birthday: new Date(2000, 0, 1),
-    },
+    defaultValues,
   });
 
   useEffect(() => {
-    const fetchUser = async () => {
-      setLoading(true);
-      const localUser = await UserService.list();
-      console.log("localUser", localUser);
-      setUser(localUser[0]);
-      setLoading(false);
-    };
     fetchUser();
   }, []);
 
-  console.log("loading", loading);
   console.log("user", user);
 
   const measurementPreference = watch("measurementPreference");
@@ -79,11 +79,17 @@ export default function HomeScreen() {
       const totalInches = data.heightFeet * 12 + data.heightInches;
       data.height = Math.round(totalInches * 2.54);
     }
-
     try {
-      const newUser = await UserService.create(data);
+      const newUser = await UserService.create({
+        ...data,
+        gender: data.gender || "prefer_not_to_say", // Ensure gender has valid value
+      });
       console.log("User created:", newUser);
       setUser(newUser);
+
+      if (newUser) {
+        reset(defaultValues);
+      }
     } catch (error) {
       console.error("Error creating user:", error);
     }
@@ -92,22 +98,6 @@ export default function HomeScreen() {
   const onError = (errors: any) => {
     console.log("Form validation errors:", errors);
   };
-
-  if (loading) {
-    return (
-      <View
-        sx={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-          bg: "background",
-          px: "10",
-        }}
-      >
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
 
   return (
     <View

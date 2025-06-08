@@ -49,6 +49,15 @@ export default function TabLayout() {
             ),
           }}
         />
+        <Tabs.Screen
+          name="dev"
+          options={{
+            title: "Dev",
+            tabBarIcon: ({ color }) => (
+              <Ionicons name="settings" size={24} color={color} />
+            ),
+          }}
+        />
       </Tabs>
     </SafeArea>
   );

@@ -11,10 +11,17 @@ export const userOnboardingSchema = z.object({
     required_error: "Measurement preference is required",
     invalid_type_error: "Measurement preference must be a string",
   }),
-  gender: z.enum(["male", "female", "other", "prefer_not_to_say"], {
-    required_error: "Gender is required",
-    invalid_type_error: "Gender must be a string",
-  }),
+  gender: z
+    .union([
+      z.literal("male"),
+      z.literal("female"),
+      z.literal("other"),
+      z.literal("prefer_not_to_say"),
+      z.literal(""), // <-- allows default to be an empty string
+    ])
+    .refine((val) => val !== "", {
+      message: "Gender is required",
+    }),
   weight: z.number().min(1).optional(),
   height: z.number().min(1).optional(),
 
@@ -22,4 +29,9 @@ export const userOnboardingSchema = z.object({
   heightInches: z.number().min(1).optional(),
 });
 
-export type UserOnboardingSchema = z.infer<typeof userOnboardingSchema>;
+type GenderOption = "male" | "female" | "other" | "prefer_not_to_say" | "";
+
+export type UserOnboardingSchema = Omit<
+  z.infer<typeof userOnboardingSchema>,
+  "gender"
+> & { gender: GenderOption };
