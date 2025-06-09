@@ -1,21 +1,24 @@
 import { View, Text } from "dripsy";
-import { ScrollView } from "react-native";
+import {
+  ScrollView,
+  View as RNView,
+  TextInput as RNTextInput,
+} from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { useEffect, useState } from "react";
-import { User } from "../../database/models/User";
+import { useEffect, useRef, useState } from "react";
 import { UserService } from "database/services/User";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, FieldErrors } from "react-hook-form";
 import {
   userOnboardingSchema,
   UserOnboardingSchema,
 } from "validation/userOnboardingSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { theme } from "theme";
-import { ThemedTextInput } from "components/ThemedTextInput";
-import { ThemedDatePicker } from "components/ThemedDatePicker";
-import { ThemedRadioGroup } from "components/ThemedRadioGroup";
+import { ThemedTextInput } from "components/themed/ThemedTextInput";
+import { ThemedDatePicker } from "components/themed/ThemedDatePicker";
+import { ThemedRadioGroup } from "components/themed/ThemedRadioGroup";
 import SegmentedControl from "@react-native-segmented-control/segmented-control";
-import { ThemedButton } from "components/ThemedButton";
+import { ThemedButton } from "components/themed/ThemedButton";
 import { useUserStore } from "store/useUserStore";
 
 export default function HomeScreen() {
@@ -59,6 +62,11 @@ export default function HomeScreen() {
     setValue("weight", measurementPreference === "imperial" ? 140 : 70);
   }, [measurementPreference]);
 
+  const scrollViewRef = useRef<ScrollView>(null);
+  const firstNameRef = useRef<RNTextInput>(null);
+  const lastNameRef = useRef<RNTextInput>(null);
+  const genderRef = useRef<RNView>(null);
+
   // Add these arrays for picker options
   const feetOptions = Array.from({ length: 8 }, (_, i) => i + 1); // 1-8 feet
   const inchesOptions = Array.from({ length: 12 }, (_, i) => i); // 0-11 inches
@@ -95,8 +103,22 @@ export default function HomeScreen() {
     }
   };
 
-  const onError = (errors: any) => {
+  const onError = (errors: FieldErrors<UserOnboardingSchema>) => {
     console.log("Form validation errors:", errors);
+
+    if (errors.firstName && firstNameRef.current) {
+      firstNameRef.current.focus?.();
+      scrollViewRef.current?.scrollTo({ y: 0, animated: true });
+    } else if (errors.lastName && lastNameRef.current) {
+      lastNameRef.current.focus?.();
+      lastNameRef.current.measure((_x, y) => {
+        scrollViewRef.current?.scrollTo({ y, animated: true });
+      });
+    } else if (errors.gender && genderRef.current) {
+      genderRef.current.measure((_x, y) => {
+        scrollViewRef.current?.scrollTo({ y, animated: true });
+      });
+    }
   };
 
   return (
@@ -120,7 +142,7 @@ export default function HomeScreen() {
         Welcome to Vetra
       </Text>
       {!user && (
-        <ScrollView keyboardShouldPersistTaps="handled">
+        <ScrollView keyboardShouldPersistTaps="handled" ref={scrollViewRef}>
           <View
             sx={{
               paddingHorizontal: 10,
@@ -141,6 +163,7 @@ export default function HomeScreen() {
                 <>
                   <Text>First Name</Text>
                   <ThemedTextInput
+                    ref={firstNameRef}
                     sx={{
                       marginVertical: theme.space[1],
                       borderWidth: 1,
@@ -148,12 +171,23 @@ export default function HomeScreen() {
                       borderRadius: 4,
                       padding: "3",
                     }}
+                    error={!!errors.firstName}
                     autoComplete="given-name"
                     textContentType="givenName"
                     onChangeText={field.onChange}
                     onBlur={field.onBlur}
                     value={field.value}
                   />
+                  {errors.firstName && (
+                    <Text
+                      sx={{
+                        color: theme.colors.alert,
+                        marginBottom: theme.space[1],
+                      }}
+                    >
+                      *{errors.firstName.message}
+                    </Text>
+                  )}
                 </>
               )}
             />
@@ -164,6 +198,7 @@ export default function HomeScreen() {
                 <>
                   <Text>Last Name</Text>
                   <ThemedTextInput
+                    ref={lastNameRef}
                     sx={{
                       marginVertical: theme.space[1],
                       borderWidth: 1,
@@ -171,12 +206,23 @@ export default function HomeScreen() {
                       borderRadius: 4,
                       padding: "3",
                     }}
+                    error={!!errors.lastName}
                     autoComplete="given-name"
                     textContentType="givenName"
                     onChangeText={field.onChange}
                     onBlur={field.onBlur}
                     value={field.value}
                   />
+                  {errors.lastName && (
+                    <Text
+                      sx={{
+                        color: theme.colors.alert,
+                        marginBottom: theme.space[1],
+                      }}
+                    >
+                      *{errors.lastName.message}
+                    </Text>
+                  )}
                 </>
               )}
             />
@@ -197,8 +243,10 @@ export default function HomeScreen() {
               name="gender"
               render={({ field }) => (
                 <ThemedRadioGroup
+                  ref={genderRef}
                   value={field.value}
                   onChange={field.onChange}
+                  error={!!errors.gender}
                   options={[
                     { label: "Male", value: "male" },
                     { label: "Female", value: "female" },
@@ -208,6 +256,14 @@ export default function HomeScreen() {
                 />
               )}
             />
+            {errors.gender && (
+              <Text
+                sx={{ color: theme.colors.alert, marginBottom: theme.space[1] }}
+              >
+                *{errors.gender.message}
+              </Text>
+            )}
+
             <Text sx={{ marginBottom: theme.space[1] }}>Do you prefer:</Text>
             <Controller
               control={control}
@@ -222,6 +278,7 @@ export default function HomeScreen() {
                     field.onChange(value);
                   }}
                   tintColor={theme.colors.primary}
+                  style={{ marginBottom: theme.space[2] }}
                 />
               )}
             />

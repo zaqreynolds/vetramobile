@@ -1,6 +1,6 @@
 import { View, Text } from "dripsy";
 import { Alert } from "react-native";
-import { ThemedButton } from "components/ThemedButton";
+import { ThemedButton } from "components/themed/ThemedButton";
 import database from "database";
 import { User } from "database/models/User";
 import { UserService } from "database/services/User";
