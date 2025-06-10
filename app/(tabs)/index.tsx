@@ -18,7 +18,7 @@ export default function HomeScreen() {
       sx={{
         flex: 1,
         alignItems: "center",
-        justifyContent: "space-between",
+        justifyContent: "flex-start",
         bg: "background",
       }}
     >
@@ -31,7 +31,7 @@ export default function HomeScreen() {
           borderRadius: 1,
         }}
       >
-        Welcome to Vetra
+        {user ? "Vetra" : "Welcome to Vetra"}
       </Text>
       {!user && <UserOnboardingForm />}
       {user && (
