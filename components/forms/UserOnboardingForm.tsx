@@ -119,6 +119,17 @@ export const UserOnboardingForm = () => {
           justifyContent: "flex-start",
         }}
       >
+        <Text
+          sx={{
+            fontSize: 32,
+            fontWeight: "bold",
+            color: "text",
+            my: 10,
+            borderRadius: 1,
+          }}
+        >
+          Welcome to Vetra
+        </Text>
         <Text sx={{ marginBottom: theme.space[1] }}>
           Before we get started, we just need to know a little about you. . .
         </Text>

@@ -3,6 +3,7 @@ import { View, useDripsyTheme } from "dripsy";
 import { Ionicons } from "@expo/vector-icons";
 import { useColorScheme } from "react-native";
 import { HeaderIcons } from "components/HeaderIcons";
+import { HeaderLeft } from "components/HeaderLeft";
 
 export default function TabLayout() {
   const { theme } = useDripsyTheme();
@@ -23,6 +24,7 @@ export default function TabLayout() {
           backgroundColor: tabBarBg,
           borderTopColor: tabBarBorder,
         },
+        headerLeft: () => <HeaderLeft />,
         headerRight: () => <HeaderIcons />,
         headerStyle: {
           backgroundColor: tabBarBg,
@@ -34,6 +36,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
+          title: "",
           tabBarIcon: ({ color }) => (
             <Ionicons name="home" size={24} color={color} />
           ),

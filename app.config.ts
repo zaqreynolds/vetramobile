@@ -1,7 +1,7 @@
 module.exports = {
   expo: {
-    name: "expo-router-example",
-    slug: "expo-router-example",
+    name: "Vetra",
+    slug: "vetra",
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/images/icon.png",

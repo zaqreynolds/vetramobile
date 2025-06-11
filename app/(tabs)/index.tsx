@@ -22,17 +22,6 @@ export default function HomeScreen() {
         bg: "background",
       }}
     >
-      <Text
-        sx={{
-          fontSize: 32,
-          fontWeight: "bold",
-          color: "text",
-          my: 10,
-          borderRadius: 1,
-        }}
-      >
-        {user ? "Vetra" : "Welcome to Vetra"}
-      </Text>
       {!user && <UserOnboardingForm />}
       {user && (
         <View>
