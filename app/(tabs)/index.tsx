@@ -2,10 +2,12 @@ import { UserOnboardingForm } from "components/forms/UserOnboardingForm";
 import { View, Text } from "dripsy";
 import { useEffect } from "react";
 import { useUserStore } from "store/useUserStore";
+import { useDripsyTheme } from "dripsy";
 
 export default function HomeScreen() {
   const user = useUserStore((state) => state.user);
   const fetchUser = useUserStore((state) => state.fetchUser);
+  const { theme } = useDripsyTheme();
 
   useEffect(() => {
     fetchUser();
@@ -24,8 +26,10 @@ export default function HomeScreen() {
     >
       {!user && <UserOnboardingForm />}
       {user && (
-        <View>
-          <Text>User found</Text>
+        <View sx={{ padding: theme.space[1] }}>
+          <Text sx={{ fontSize: theme.fontSizes.lg, fontWeight: "bold" }}>
+            Welcome back, {user.firstName}!
+          </Text>
         </View>
       )}
     </View>
