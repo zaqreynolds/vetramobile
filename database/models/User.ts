@@ -1,5 +1,12 @@
 import { Model } from "@nozbe/watermelondb";
-import { text, field, date, readonly } from "@nozbe/watermelondb/decorators";
+import {
+  text,
+  field,
+  date,
+  readonly,
+  children,
+} from "@nozbe/watermelondb/decorators";
+import { Workout } from "./Workout";
 
 type MeasurementPreference = "metric" | "imperial";
 type Gender = "male" | "female" | "other" | "prefer_not_to_say";
@@ -17,6 +24,8 @@ export class User extends Model {
   @text("gender") gender!: Gender;
   @readonly @date("created_at") createdAt!: Date;
   @readonly @date("updated_at") updatedAt!: Date;
+
+  @children("workouts") workouts!: Workout[];
 
   get fullName() {
     return `${this.firstName} ${this.lastName}`;
