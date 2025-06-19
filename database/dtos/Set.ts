@@ -7,6 +7,7 @@ export interface CreateSetDTO {
 }
 
 export interface UpdateSetDTO {
+  id: string;
   reps?: number;
   weight?: number;
   duration?: number;

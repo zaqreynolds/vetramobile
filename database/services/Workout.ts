@@ -5,6 +5,7 @@ import {
   UpdateWorkoutDTO,
   WorkoutWithExercisesDTO,
 } from "../dtos/Workout";
+import { ExerciseWithSetsDTO } from "database/dtos/Exercise";
 
 export class WorkoutService {
   static async list(): Promise<Workout[]> {
@@ -35,14 +36,11 @@ export class WorkoutService {
     });
   }
 
-  static async update(
-    id: string,
-    data: UpdateWorkoutDTO
-  ): Promise<Workout | null> {
+  static async update(data: UpdateWorkoutDTO): Promise<Workout | null> {
     try {
       return await database.write(async () => {
         const workouts = database.get<Workout>("workouts");
-        const workout = await workouts.find(id);
+        const workout = await workouts.find(data.id);
 
         await workout.update((w) => {
           if (data.name !== undefined) w.name = data.name;
@@ -115,7 +113,7 @@ export class WorkoutService {
         date: workout.date,
         createdAt: workout.createdAt,
         updatedAt: workout.updatedAt,
-        exercises: exercisesWithSets,
+        exercises: exercisesWithSets as ExerciseWithSetsDTO[],
       };
     } catch (error) {
       console.error("Error fetching workout with exercises:", error);

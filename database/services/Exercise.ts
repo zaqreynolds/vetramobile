@@ -40,14 +40,11 @@ export class ExerciseService {
     });
   }
 
-  static async update(
-    id: string,
-    data: UpdateExerciseDTO
-  ): Promise<Exercise | null> {
+  static async update(data: UpdateExerciseDTO): Promise<Exercise | null> {
     try {
       return await database.write(async () => {
         const exercises = database.get<Exercise>("exercises");
-        const exercise = await exercises.find(id);
+        const exercise = await exercises.find(data.id);
 
         await exercise.update((e) => {
           if (data.name !== undefined) e.name = data.name;

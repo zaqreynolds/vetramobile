@@ -1,4 +1,5 @@
 import { MuscleGroup, ExerciseType } from "../models/Exercise";
+import { ExerciseWithSetsDTO } from "./Exercise";
 
 export interface CreateWorkoutDTO {
   name: string;
@@ -7,6 +8,7 @@ export interface CreateWorkoutDTO {
 }
 
 export interface UpdateWorkoutDTO {
+  id: string;
   name?: string;
   notes?: string;
   date?: Date;
@@ -19,22 +21,5 @@ export interface WorkoutWithExercisesDTO {
   date: Date;
   createdAt: Date;
   updatedAt: Date;
-  exercises: ExerciseDTO[];
-}
-
-export interface ExerciseDTO {
-  id: string;
-  name: string;
-  notes?: string;
-  muscleGroup: MuscleGroup;
-  exerciseType: ExerciseType;
-  sets: SetDTO[];
-}
-
-export interface SetDTO {
-  id: string;
-  reps: number;
-  weight: number;
-  duration?: number;
-  restTime?: number;
+  exercises: ExerciseWithSetsDTO[];
 }

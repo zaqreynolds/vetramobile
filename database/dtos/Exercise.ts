@@ -9,6 +9,7 @@ export interface CreateExerciseDTO {
 }
 
 export interface UpdateExerciseDTO {
+  id: string;
   name?: string;
   notes?: string;
   muscleGroup?: MuscleGroup;

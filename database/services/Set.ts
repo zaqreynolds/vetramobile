@@ -36,11 +36,11 @@ export class SetService {
     });
   }
 
-  static async update(id: string, data: UpdateSetDTO): Promise<Set | null> {
+  static async update(data: UpdateSetDTO): Promise<Set | null> {
     try {
       return await database.write(async () => {
         const sets = database.get<Set>("sets");
-        const set = await sets.find(id);
+        const set = await sets.find(data.id);
 
         await set.update((s) => {
           if (data.reps !== undefined) s.reps = data.reps;
