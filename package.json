@@ -17,6 +17,7 @@
   "dependencies": {
     "@dripsy/core": "^3.10.0",
     "@expo/config-plugins": "~10.0.0",
+    "@gorhom/bottom-sheet": "^5.1.6",
     "@hookform/resolvers": "^5.0.1",
     "@morrowdigital/watermelondb-expo-plugin": "^2.3.3",
     "@nozbe/watermelondb": "^0.28.0",
@@ -40,6 +41,7 @@
     "react-dom": "19.0.0",
     "react-hook-form": "^7.57.0",
     "react-native": "0.79.2",
+    "react-native-gesture-handler": "~2.24.0",
     "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.10.0",

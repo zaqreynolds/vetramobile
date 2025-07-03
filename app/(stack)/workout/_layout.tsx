@@ -20,22 +20,28 @@ export default function WorkoutLayout() {
           backgroundColor: headerBg,
         },
         headerTintColor: headerText,
+        headerLeft: () => (
+          <Ionicons
+            name="arrow-back"
+            size={24}
+            color={theme.colors.primary}
+            onPress={() => router.back()}
+            style={{ marginLeft: 16 }}
+          />
+        ),
       }}
     >
       <Stack.Screen
         name="create"
         options={{
-          title: "Create Workout",
+          title: "",
+        }}
+      />
+      <Stack.Screen
+        name="start"
+        options={{
+          title: "Create a Workout",
           presentation: "modal",
-          headerLeft: () => (
-            <Ionicons
-              name="arrow-back"
-              size={24}
-              color={theme.colors.primary}
-              onPress={() => router.back()}
-              style={{ marginLeft: 16 }}
-            />
-          ),
         }}
       />
     </Stack>

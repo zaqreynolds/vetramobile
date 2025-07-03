@@ -30,7 +30,13 @@ export default function HomeScreen() {
       {!user && <UserOnboardingForm />}
       {user && (
         <View sx={{ padding: theme.space[1] }}>
-          <Text sx={{ fontSize: theme.fontSizes.lg, fontWeight: "bold" }}>
+          <Text
+            sx={{
+              fontSize: theme.fontSizes.lg,
+              fontWeight: "bold",
+              marginBottom: 200,
+            }}
+          >
             Welcome back, {user.firstName}!
           </Text>
           <ThemedButton onPress={() => router.push("/workout/create")}>

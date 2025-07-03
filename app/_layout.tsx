@@ -9,6 +9,8 @@ import {
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { Provider } from "./Provider";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -54,22 +56,28 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
-      <Stack>
-        <Stack.Screen
-          name="(tabs)"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="(stack)"
-          options={{
-            headerShown: false,
-          }}
-        />
-      </Stack>
-    </ThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <BottomSheetModalProvider>
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+          <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
+          <Stack>
+            <Stack.Screen
+              name="(tabs)"
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="(stack)"
+              options={{
+                headerShown: false,
+              }}
+            />
+          </Stack>
+        </ThemeProvider>
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 }
